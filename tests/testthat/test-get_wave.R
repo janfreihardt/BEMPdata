@@ -21,8 +21,30 @@ test_that(".normalise_wave handles case and missing underscore", {
 })
 
 test_that("get_wave rejects invalid wave identifiers", {
-  expect_error(get_wave("w99"), "not a valid wave")
+  expect_error(get_wave("w99"),   "not a valid wave")
   expect_error(get_wave("wave1"), "not a valid wave")
+})
+
+test_that("get_wave downloads and returns a data frame", {
+  skip_on_cran()
+  skip_if_offline()
+  w1 <- get_wave("w1")
+  expect_s3_class(w1, "data.frame")
+  expect_gt(nrow(w1), 0)
+  expect_gt(ncol(w1), 0)
+})
+
+test_that("get_codebook rejects invalid wave", {
+  expect_error(get_codebook("w99"), "not a valid wave")
+})
+
+test_that("get_codebook downloads and returns a data frame", {
+  skip_on_cran()
+  skip_if_offline()
+  cb <- get_codebook("w1")
+  expect_s3_class(cb, "data.frame")
+  expect_gt(nrow(cb), 0)
+  expect_true("variable_name" %in% names(cb))
 })
 
 test_that("lookup_variable returns a data frame", {
@@ -41,8 +63,4 @@ test_that("lookup_variable is case-insensitive", {
 test_that("lookup_variable returns empty frame for no-match", {
   result <- lookup_variable("xyzzy_no_match_12345")
   expect_equal(nrow(result), 0)
-})
-
-test_that("get_codebook rejects invalid wave", {
-  expect_error(get_codebook("w99"), "not a valid wave")
 })
