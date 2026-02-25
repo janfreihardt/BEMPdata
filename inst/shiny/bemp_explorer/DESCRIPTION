@@ -1,0 +1,13 @@
+Package: bemp-explorer
+Type: Shiny
+Title: BEMP Data Explorer
+Version: 0.1.0
+Imports:
+    BEMPdata,
+    shiny,
+    bslib,
+    DT,
+    ggplot2,
+    dplyr
+Remotes:
+    janfreihardt/BEMPdata
