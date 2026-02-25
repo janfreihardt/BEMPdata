@@ -3,7 +3,7 @@ Title: Access the Bangladesh Environmental Mobility Panel Dataset
 Version: 0.1.0
 Authors@R:
     person("Jan", "Freihardt", role = c("aut", "cre"),
-           email = "your.email@example.com")
+           email = "fjan@ethz.ch")
 Description: Provides functions to download and work with the Bangladesh
     Environmental Mobility Panel (BEMP), a household panel survey tracing
     the impacts of riverbank erosion and flooding on (im)mobility,
@@ -16,7 +16,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports:
     utils,
     tools,
