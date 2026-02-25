@@ -21,8 +21,12 @@ Imports:
     utils,
     tools,
     readr,
-    haven
+    haven,
+    shiny
 Suggests:
+    bslib,
+    DT,
+    ggplot2,
     dplyr,
     testthat (>= 3.0.0),
     knitr,
