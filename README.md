@@ -3,6 +3,7 @@
 **R package for the Bangladesh Environmental Mobility Panel**
 
 <!-- badges: start -->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18775710.svg)](https://doi.org/10.5281/zenodo.18775710)
 <!-- badges: end -->
 
 `BEMPdata` provides functions to download and work with the
@@ -62,6 +63,16 @@ bemp_cache_info()
 Freihardt, J. et al. (2026). *Panel data on (im)mobility, socio-economic, and
 political impacts of riverbank erosion and flooding in Bangladesh* [Dataset].
 Zenodo. <https://doi.org/10.5281/zenodo.18229498>
+
+## Citation
+
+If you use this package, please cite:
+
+> Freihardt, J. (2026). *BEMPdata: R package for the Bangladesh Environmental Mobility Panel*. Zenodo. <https://doi.org/10.5281/zenodo.18775710>
+
+For the underlying dataset:
+
+> Freihardt, J. et al. (2026). *Panel data on (im)mobility, socio-economic, and political impacts of riverbank erosion and flooding in Bangladesh* [Dataset]. Zenodo. <https://doi.org/10.5281/zenodo.18229498>
 
 ## License
 

@@ -138,11 +138,20 @@ panel <- inner_join(w1, w6n, by = "w1_reg1", suffix = c("_w1", "_w6n"))
 
 ## Citation
 
-If you use this dataset please cite both the data descriptor and the Zenodo
-deposit:
+If you use this package or dataset, please cite:
+
+**R package:**
+
+> Freihardt, J. (2026). *BEMPdata: R package for the Bangladesh Environmental
+> Mobility Panel*. Zenodo. <https://doi.org/10.5281/zenodo.18775710>
+
+**Dataset:**
+
+> Freihardt, J. et al. (2026). *Panel data on (im)mobility, socio-economic,
+> and political impacts of riverbank erosion and flooding in Bangladesh*
+> [Dataset]. Zenodo. <https://doi.org/10.5281/zenodo.18229498>
+
+**Data descriptor:**
 
 > Freihardt, J. et al. (*forthcoming*). Bangladesh Environmental Mobility
 > Panel (BEMP). *[Journal]*. DOI: [to be added]
-
-> Freihardt, J. et al. (2026). Bangladesh Environmental Mobility Panel
-> (BEMP) [Dataset]. Zenodo. <https://doi.org/10.5281/zenodo.18229498>
