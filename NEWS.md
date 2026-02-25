@@ -1,3 +1,9 @@
+# BEMPdata 0.2.0
+
+* Add interactive Shiny data explorer (`run_app()`), deployed at
+  <https://b68gkn-janfreihardt.shinyapps.io/bemp-explorer/>.
+  Includes a codebook browser, variable inspector, and download assistant.
+
 # BEMPdata 0.1.0
 
 * Initial release.
