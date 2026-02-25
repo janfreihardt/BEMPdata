@@ -42,9 +42,12 @@ get_wave <- function(wave, format = "csv", refresh = FALSE) {
     )
   }
 
-  zip_name  <- paste0("bemp_quantitative_data_as_", format, ".zip")
+  zip_name   <- paste0("bemp_quantitative_data_as_", format, ".zip")
   zip_subdir <- paste0("bemp_quantitative_data_as_", format)
-  file_name <- paste0("bemp_", wave, ".", format)
+  # Filenames in the zip use uppercase suffixes (w6_M, w12_N, w14_V);
+  # uppercase the _m/_n/_v suffix so paths work on case-sensitive systems.
+  wave_filename <- gsub("_([mnv])$", "_\\U\\1", wave, perl = TRUE)
+  file_name <- paste0("bemp_", wave_filename, ".", format)
 
   cached_path <- file.path(.cache_dir(), zip_subdir, file_name)
 

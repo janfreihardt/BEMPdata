@@ -58,8 +58,9 @@ get_codebook <- function(wave = "all", refresh = FALSE) {
     tabs <- lapply(files, .read_codebook_file)
     do.call(rbind, tabs)
   } else {
+    wave_filename <- gsub("_([mnv])$", "_\\U\\1", wave, perl = TRUE)
     f <- file.path(.cache_dir(), cb_subdir,
-                   paste0("bemp_", wave, "_codebook.csv"))
+                   paste0("bemp_", wave_filename, "_codebook.csv"))
     if (!file.exists(f)) {
       stop("Codebook file not found: ", f)
     }
