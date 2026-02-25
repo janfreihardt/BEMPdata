@@ -4,6 +4,7 @@
 
 <!-- badges: start -->
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18775710.svg)](https://doi.org/10.5281/zenodo.18775710)
+[![Shiny app](https://img.shields.io/badge/Shiny-Data%20Explorer-blue?logo=r)](https://b68gkn-janfreihardt.shinyapps.io/bemp-explorer/)
 <!-- badges: end -->
 
 `BEMPdata` provides functions to download and work with the
@@ -14,6 +15,19 @@ datasets and 24,279 completed surveys.
 
 Wave data are hosted on Zenodo and downloaded on demand (~6 MB for all CSVs).
 Files are cached locally so subsequent calls are instant.
+
+## Interactive data explorer
+
+An interactive app for browsing the codebook, inspecting variable distributions,
+and downloading data subsets is available at:
+
+**<https://b68gkn-janfreihardt.shinyapps.io/bemp-explorer/>**
+
+Or launch it locally after installing the package:
+
+```r
+BEMPdata::run_app()
+```
 
 ## Installation
 
