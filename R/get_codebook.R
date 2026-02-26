@@ -1,3 +1,5 @@
+utils::globalVariables("codebook")
+
 #' Get the codebook for one or all BEMP waves
 #'
 #' Returns the codebook for a specific wave, or the merged codebook across all

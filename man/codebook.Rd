@@ -5,20 +5,26 @@
 \alias{codebook}
 \title{Merged BEMP codebook across all waves}
 \format{
-A data frame with the following key columns:
-\describe{
-\item{wave}{Wave identifier, e.g. \code{"w1"}, \code{"w6_m"}, \code{"w14_v"}.}
-\item{variable_name}{Variable name as it appears in the dataset.}
-\item{variable_label}{Short English label for the variable.}
-\item{block}{Thematic block within the questionnaire.}
-\item{question}{Short question description.}
-\item{question_type}{Question type (e.g. single-choice, numeric).}
-\item{question_text}{Full question text in English.}
-\item{question_text_bn}{Full question text in Bangla.}
-\item{appears_in_waves}{String listing all waves in which this variable
-appears, with observation counts.}
-\item{val_0, val_1, ...}{Value labels for coded response options.}
+A data frame with one row per variable per wave. Key columns:
+\itemize{
+\item \code{wave}: Wave identifier, e.g. \code{"w1"}, \code{"w6_m"}, \code{"w14_v"}.
+\item \code{variable_name}: Variable name as it appears in the dataset.
+\item \code{variable_label}: Short English label for the variable.
+\item \code{block}: Thematic block within the questionnaire.
+\item \code{question}: Short question description.
+\item \code{question_type}: Question type (e.g. single-choice, numeric).
+\item \code{question_text}: Full question text in English.
+\item \code{question_text_bn}: Full question text in Bangla.
+\item \code{appears_in_waves}: String listing all waves in which this variable
+appears, with observation counts.
 }
+
+Additional columns \code{val_0}, \code{val_1}, ... contain English value labels for
+coded response options; \verb{0_bn}, \verb{1_bn}, ... contain the corresponding
+Bangla value labels. Other columns include \code{item_source}, \code{item_text},
+\code{item_text_bn}, \code{skip_logic}, \code{block_display_logic},
+\code{block_randomization}, \code{question_display_logic}, \code{comment}, and
+\code{dataset}.
 }
 \source{
 Zenodo record 18229498, \code{bemp_codebooks_as_csv.zip}
