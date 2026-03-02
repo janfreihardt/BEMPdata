@@ -30,6 +30,8 @@ ui <- page_navbar(
           options  = list(placeholder = "All blocks")
         ),
         hr(),
+        downloadButton("cb_export", "Export to CSV",
+                       class = "btn-outline-primary btn-sm w-100 mb-2"),
         actionButton("cb_reset", "Reset filters", class = "btn-outline-secondary btn-sm w-100")
       ),
 
@@ -69,6 +71,7 @@ ui <- page_navbar(
 
       uiOutput("vi_title"),
       plotOutput("vi_plot", height = "380px"),
+      uiOutput("vi_dl_btn"),
       br(),
       uiOutput("vi_summary")
     )

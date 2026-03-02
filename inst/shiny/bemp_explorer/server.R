@@ -30,8 +30,14 @@ server <- function(input, output, session) {
       df <- df[hits, ]
     }
 
-    df
+    # Sort by chronological wave order (N before M within each round)
+    df[order(match(df$wave, wave_sort_order)), ]
   })
+
+  output$cb_export <- downloadHandler(
+    filename = function() paste0("bemp_codebook_subset_", Sys.Date(), ".csv"),
+    content  = function(file) write.csv(cb_filtered(), file, row.names = FALSE)
+  )
 
   output$cb_n_results <- renderUI({
     n <- nrow(cb_filtered())
@@ -41,7 +47,10 @@ server <- function(input, output, session) {
   })
 
   output$cb_table <- renderDT({
-    cb_filtered() |>
+    df <- cb_filtered()
+    wave_disp <- setNames(wo$wave, tolower(wo$wave))
+    df$wave <- wave_disp[df$wave]
+    df |>
       select(wave, variable_name, variable_label, block, question, question_type) |>
       datatable(
         selection  = "single",
@@ -94,6 +103,45 @@ server <- function(input, output, session) {
             )
           )
         )
+      },
+
+      # Cross-wave wording comparison
+      {
+        appears <- row$appears_in_waves
+        if (!is.na(appears) && nzchar(appears)) {
+          # appears_in_waves format: "w1_q7 (n = 2012), w2_q67 (n = 1543), ..."
+          cross_vars <- trimws(sub(" \\(.*", "", strsplit(appears, ",\\s*")[[1]]))
+          if (length(cross_vars) > 1) {
+            # Build rows in appears_in_waves order (one lookup per variable)
+            same_var <- dplyr::bind_rows(lapply(cross_vars, function(v) {
+              r <- cb[cb$variable_name == v,
+                      c("wave", "variable_name", "variable_label", "question_text"),
+                      drop = FALSE]
+              if (nrow(r) > 0) r[1L, ] else NULL
+            }))
+            # Lookup for correct-case wave labels (w6_M not w6_m)
+            wave_disp <- setNames(wo$wave, tolower(wo$wave))
+            tagList(
+              hr(),
+              tags$strong("Cross-wave wording"),
+              tags$table(class = "table table-sm table-striped mt-2",
+                tags$thead(tags$tr(tags$th("Wave"), tags$th("Variable"),
+                                   tags$th("Label"), tags$th("Question"))),
+                tags$tbody(
+                  lapply(seq_len(nrow(same_var)), function(i) {
+                    wv <- same_var[["wave"]][i]
+                    tags$tr(
+                      tags$td(tags$code(wave_disp[wv])),
+                      tags$td(tags$code(same_var[["variable_name"]][i])),
+                      tags$td(same_var[["variable_label"]][i]),
+                      tags$td(tags$small(same_var[["question_text"]][i]))
+                    )
+                  })
+                )
+              )
+            )
+          }
+        }
       }
     )
   })
@@ -147,7 +195,7 @@ server <- function(input, output, session) {
     h4(lab, tags$small(class = "text-muted ms-2", input$vi_var))
   })
 
-  output$vi_plot <- renderPlot({
+  vi_plot_obj <- reactive({
     req(input$vi_var)
     df <- vi_data()
     req(df)
@@ -188,6 +236,19 @@ server <- function(input, output, session) {
     }
   })
 
+  output$vi_plot <- renderPlot({ vi_plot_obj() })
+
+  output$vi_dl_btn <- renderUI({
+    req(vi_plot_obj())
+    downloadButton("vi_plot_dl", "Save plot (.png)",
+                   class = "btn-outline-secondary btn-sm mt-1")
+  })
+
+  output$vi_plot_dl <- downloadHandler(
+    filename = function() paste0("bemp_", input$vi_wave, "_", input$vi_var, ".png"),
+    content  = function(file) ggsave(file, vi_plot_obj(), width = 8, height = 5, dpi = 150)
+  )
+
   output$vi_summary <- renderUI({
     req(input$vi_var)
     df <- vi_data()
@@ -204,9 +265,16 @@ server <- function(input, output, session) {
 
     stats_rows <- list(
       tags$tr(tags$th("N (valid)"),  tags$td(format(n_valid,  big.mark = ","))),
-      tags$tr(tags$th("Missing"),    tags$td(sprintf("%s  (%.1f%%)",
-                                                     format(n_miss, big.mark = ","),
-                                                     pct_miss)))
+      tags$tr(
+        tags$th("Missing"),
+        tags$td(
+          sprintf("%s (%.1f%%)", format(n_miss, big.mark = ","), pct_miss),
+          div(class = "progress mt-1", style = "height: 5px;",
+            div(class = "progress-bar bg-warning", role = "progressbar",
+                style = paste0("width:", pct_miss, "%;"))
+          )
+        )
+      )
     )
 
     num_data <- suppressWarnings(as.numeric(col_data))
@@ -298,8 +366,15 @@ server <- function(input, output, session) {
   })
 
   output$dl_download_ui <- renderUI({
-    req(dl_data())
-    downloadButton("dl_file", "Download CSV", class = "btn-success w-100")
+    tagList(
+      if (!is.null(dl_data()))
+        tagList(
+          downloadButton("dl_file", "Download CSV", class = "btn-success w-100"),
+          br(), br()
+        ),
+      downloadButton("dl_codebook", "Download codebook (CSV)",
+                     class = "btn-outline-secondary btn-sm w-100")
+    )
   })
 
   output$dl_file <- downloadHandler(
@@ -312,6 +387,13 @@ server <- function(input, output, session) {
     }
   )
 
+
+  output$dl_codebook <- downloadHandler(
+    filename = function() paste0("bemp_", input$dl_wave, "_codebook_", Sys.Date(), ".csv"),
+    content  = function(file) {
+      write.csv(cb[cb$wave == tolower(input$dl_wave), ], file, row.names = FALSE)
+    }
+  )
 
   # ── Tab 4: About ──────────────────────────────────────────────────────────
 

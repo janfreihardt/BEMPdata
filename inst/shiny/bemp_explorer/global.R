@@ -20,6 +20,17 @@ wave_choices <- setNames(
 # All thematic blocks (for codebook browser filter)
 all_blocks <- sort(unique(cb$block[!is.na(cb$block) & nzchar(cb$block)]))
 
+# Chronological wave sort order (N before M within each round, V last)
+wave_sort_order <- c(
+  "w1", "w1_v",
+  "w2", "w3", "w4", "w5",
+  "w6_n", "w6_m",
+  "w7", "w8", "w9", "w10", "w11",
+  "w12_n", "w12_m", "w12_v",
+  "w13",
+  "w14_n", "w14_m", "w14_v"
+)
+
 # ── Helper functions ──────────────────────────────────────────────────────────
 
 # Return value-label data frame for a variable (code, label columns)
