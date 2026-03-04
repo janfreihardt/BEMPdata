@@ -23,7 +23,7 @@ utils::globalVariables("codebook")
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Codebook for the baseline wave
 #' cb_w1 <- get_codebook("w1")
 #'
@@ -58,6 +58,12 @@ get_codebook <- function(wave = "all", refresh = FALSE) {
       full.names = TRUE
     )
     tabs <- lapply(files, .read_codebook_file)
+    all_cols <- unique(unlist(lapply(tabs, names)))
+    tabs <- lapply(tabs, function(df) {
+      missing <- setdiff(all_cols, names(df))
+      if (length(missing) > 0) df[missing] <- NA
+      df[all_cols]
+    })
     do.call(rbind, tabs)
   } else {
     wave_filename <- gsub("_([mnv])$", "_\\U\\1", wave, perl = TRUE)
@@ -120,13 +126,11 @@ get_codebook <- function(wave = "all", refresh = FALSE) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' # Find all income-related variables
 #' lookup_variable("income")
 #'
 #' # Search only variable labels for migration-related items
 #' lookup_variable("migrat", fields = "label")
-#' }
 lookup_variable <- function(pattern,
                              fields = c("name", "label", "question")) {
   fields <- match.arg(fields, choices = c("name", "label", "question"),

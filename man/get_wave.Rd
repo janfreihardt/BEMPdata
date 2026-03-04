@@ -29,7 +29,7 @@ the first call downloads every wave at once (~6 MB for CSV, ~14 MB for
 Stata); subsequent calls are instant because files are cached locally.
 }
 \examples{
-\dontrun{
+\donttest{
 # Baseline in-person wave
 w1 <- get_wave("w1")
 

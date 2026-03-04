@@ -31,7 +31,7 @@ locally. Alternatively, use the pre-built \link{codebook} object that ships with
 the package for offline use.
 }
 \examples{
-\dontrun{
+\donttest{
 # Codebook for the baseline wave
 cb_w1 <- get_codebook("w1")
 

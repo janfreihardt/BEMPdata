@@ -56,8 +56,8 @@ bemp_cache_info <- function() {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' bemp_cache_clear(confirm = TRUE)
+#' if (interactive()) {
+#'   bemp_cache_clear(confirm = TRUE)
 #' }
 bemp_cache_clear <- function(confirm = FALSE) {
   d <- tools::R_user_dir("BEMPdata", which = "cache")

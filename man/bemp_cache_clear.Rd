@@ -19,7 +19,7 @@ Deletes all locally cached BEMP files. The next call to \code{\link[=get_wave]{g
 \code{\link[=get_codebook]{get_codebook()}} will re-download from Zenodo.
 }
 \examples{
-\dontrun{
-bemp_cache_clear(confirm = TRUE)
+if (interactive()) {
+  bemp_cache_clear(confirm = TRUE)
 }
 }

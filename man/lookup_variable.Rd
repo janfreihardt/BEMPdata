@@ -23,11 +23,9 @@ question text matches a pattern. Useful for finding a variable when you
 know a keyword but not the exact variable name.
 }
 \examples{
-\dontrun{
 # Find all income-related variables
 lookup_variable("income")
 
 # Search only variable labels for migration-related items
 lookup_variable("migrat", fields = "label")
-}
 }

@@ -20,7 +20,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Baseline in-person wave
 #' w1 <- get_wave("w1")
 #'
