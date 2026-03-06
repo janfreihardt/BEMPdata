@@ -966,10 +966,13 @@ server <- function(input, output, session) {
                        selected = character(0),
                        server   = TRUE)
 
-  pd_results <- reactiveVal(NULL)
-  pd_raw     <- reactiveVal(NULL)
+  pd_results  <- reactiveVal(NULL)
+  pd_raw      <- reactiveVal(NULL)
+  pd_trigger  <- reactiveVal(0L)
 
-  observeEvent(input$pd_load, {
+  observeEvent(input$pd_load, pd_trigger(pd_trigger() + 1L))
+
+  observeEvent(pd_trigger(), {
     req(input$pd_var, nzchar(input$pd_var))
     pd_results(NULL)
     pd_raw(NULL)
@@ -1059,7 +1062,7 @@ server <- function(input, output, session) {
     pd_raw(if (length(raw_list) > 0)
       Reduce(function(a, b) merge(a, b, by = "resp_code", all = TRUE), raw_list)
     else NULL)
-  })
+  }, ignoreInit = TRUE)
 
   output$pd_status <- renderUI({
     df <- pd_results()
@@ -1467,10 +1470,12 @@ server <- function(input, output, session) {
       vi_url_var(state$values$vi_var)
   })
 
-  # After inputs are restored: switch to the bookmarked tab
+  # After inputs are restored: switch to the bookmarked tab and auto-load panels
   onRestored(function(state) {
     tab <- state$input$main_navbar
     if (!is.null(tab)) nav_select("main_navbar", selected = tab, session = session)
+    if (!is.null(state$input$pd_var) && nzchar(state$input$pd_var))
+      pd_trigger(pd_trigger() + 1L)
   })
 
   # ── Tab 6: About ──────────────────────────────────────────────────────────
