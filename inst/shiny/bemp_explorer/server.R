@@ -1466,6 +1466,7 @@ server <- function(input, output, session) {
   observeEvent(session$clientData$url_search, {
     query <- parseQueryString(session$clientData$url_search)
     if (length(query) == 0) return()
+    if (!is.null(query[["_inputs_"]])) return()  # Shiny bookmark URL – handled by onRestore
 
     if (!is.null(query$tab) && query$tab %in% TAB_SLUGS)
       nav_select("main_navbar",
@@ -1499,6 +1500,7 @@ server <- function(input, output, session) {
   # CE variables: restore after wave choices are populated
   observeEvent(ce_data(), {
     query <- parseQueryString(isolate(session$clientData$url_search))
+    if (!is.null(query[["_inputs_"]])) return()  # Shiny bookmark URL – handled by onRestore
     if (!is.null(query$ce_vx) && nzchar(query$ce_vx))
       updateSelectizeInput(session, "ce_var_x", selected = query$ce_vx)
     if (!is.null(query$ce_vy) && nzchar(query$ce_vy))
