@@ -1467,6 +1467,12 @@ server <- function(input, output, session) {
       vi_url_var(state$values$vi_var)
   })
 
+  # After inputs are restored: switch to the bookmarked tab
+  onRestored(function(state) {
+    tab <- state$input$main_navbar
+    if (!is.null(tab)) nav_select("main_navbar", selected = tab, session = session)
+  })
+
   # ── Tab 6: About ──────────────────────────────────────────────────────────
 
   output$about_waves <- renderDT({
