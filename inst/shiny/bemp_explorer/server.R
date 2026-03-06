@@ -202,7 +202,7 @@ server <- function(input, output, session) {
 
   # Load wave data reactively (cached on disk by get_wave())
   vi_data    <- reactiveVal(NULL)
-  vi_url_var <- reactiveVal(NULL)  # variable to pre-select from URL, cleared on wave change
+  vi_url_var <- reactiveVal(NULL)  # variable to pre-select from bookmark restore, cleared on wave change
 
   observeEvent(input$vi_wave, vi_url_var(NULL), ignoreInit = TRUE)
 
@@ -1451,104 +1451,7 @@ server <- function(input, output, session) {
     }
   )
 
-  # ── URL state & bookmarking ───────────────────────────────────────────────
-  # Maps tab titles to short URL slugs
-  TAB_SLUGS <- c(
-    "Variable Inspector"   = "vi",
-    "Codebook Browser"     = "cb",
-    "Correlation Explorer" = "ce",
-    "Panel Dynamics"       = "pd",
-    "Download Assistant"   = "da",
-    "About"                = "about"
-  )
-
-  # Read: restore state from URL parameters once at session start
-  observeEvent(session$clientData$url_search, {
-    query <- parseQueryString(session$clientData$url_search)
-    if (length(query) == 0) return()
-    if (!is.null(query[["_inputs_"]])) return()  # Shiny bookmark URL – handled by onRestore
-
-    if (!is.null(query$tab) && query$tab %in% TAB_SLUGS)
-      nav_select("main_navbar",
-                 selected = names(TAB_SLUGS)[TAB_SLUGS == query$tab],
-                 session  = session)
-
-    # Variable Inspector
-    if (!is.null(query$vi_wave))
-      updateSelectInput(session, "vi_wave", selected = query$vi_wave)
-    if (!is.null(query$vi_var) && nzchar(query$vi_var))
-      vi_url_var(query$vi_var)
-
-    # Codebook Browser
-    if (!is.null(query$cb_q) && nzchar(query$cb_q))
-      updateTextInput(session, "cb_search", value = query$cb_q)
-
-    # Correlation Explorer (wave only; variables restored after ce_data() loads)
-    if (!is.null(query$ce_wave))
-      updateSelectInput(session, "ce_wave", selected = query$ce_wave)
-
-    # Panel Dynamics
-    if (!is.null(query$pd_var) && nzchar(query$pd_var))
-      updateSelectizeInput(session, "pd_var", selected = query$pd_var, server = TRUE)
-
-    # Download Assistant
-    if (!is.null(query$da_waves) && nzchar(query$da_waves))
-      updateSelectizeInput(session, "mw_waves",
-                           selected = strsplit(query$da_waves, ",")[[1]])
-  }, once = TRUE)
-
-  # CE variables: restore after wave choices are populated
-  observeEvent(ce_data(), {
-    query <- parseQueryString(isolate(session$clientData$url_search))
-    if (!is.null(query[["_inputs_"]])) return()  # Shiny bookmark URL – handled by onRestore
-    if (!is.null(query$ce_vx) && nzchar(query$ce_vx))
-      updateSelectizeInput(session, "ce_var_x", selected = query$ce_vx)
-    if (!is.null(query$ce_vy) && nzchar(query$ce_vy))
-      updateSelectizeInput(session, "ce_var_y", selected = query$ce_vy)
-  }, once = TRUE, ignoreNULL = TRUE)
-
-  # Write: encode current tab + relevant inputs into URL on every change
-  cb_search_d <- debounce(reactive(input$cb_search), 800)
-
-  observe({
-    tab <- input$main_navbar
-    if (is.null(tab)) return()
-    slug <- TAB_SLUGS[tab]
-    if (is.na(slug)) return()
-
-    params <- list(tab = unname(slug))
-
-    if (tab == "Variable Inspector") {
-      if (!is.null(input$vi_wave)) params$vi_wave <- input$vi_wave
-      vv <- vi_var()
-      if (!is.null(vv) && nzchar(vv)) params$vi_var <- vv
-
-    } else if (tab == "Codebook Browser") {
-      q <- cb_search_d()
-      if (!is.null(q) && nzchar(trimws(q))) params$cb_q <- trimws(q)
-
-    } else if (tab == "Correlation Explorer") {
-      if (!is.null(input$ce_wave)) params$ce_wave <- input$ce_wave
-      if (!is.null(input$ce_var_x) && nzchar(input$ce_var_x)) params$ce_vx <- input$ce_var_x
-      if (!is.null(input$ce_var_y) && nzchar(input$ce_var_y)) params$ce_vy <- input$ce_var_y
-
-    } else if (tab == "Panel Dynamics") {
-      v <- input$pd_var
-      if (!is.null(v) && nzchar(v)) params$pd_var <- v
-
-    } else if (tab == "Download Assistant") {
-      if (length(input$mw_waves) > 0)
-        params$da_waves <- paste(input$mw_waves, collapse = ",")
-    }
-
-    qs <- paste0("?", paste(
-      names(params),
-      vapply(params, utils::URLencode, character(1), reserved = TRUE),
-      sep = "=", collapse = "&"
-    ))
-    updateQueryString(qs, mode = "replace", session = session)
-  })
-
+  # ── Bookmarking ───────────────────────────────────────────────────────────
   # Exclude action-button counters from bookmark state
   setBookmarkExclude(c("mw_merge", "pd_load", "cb_reset"))
 
