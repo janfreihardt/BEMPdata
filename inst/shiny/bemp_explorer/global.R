@@ -1,6 +1,5 @@
 library(shiny)
 library(bslib)
-enableBookmarking("url")
 library(DT)
 library(ggplot2)
 library(dplyr)

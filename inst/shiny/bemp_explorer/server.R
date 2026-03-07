@@ -63,7 +63,7 @@ server <- function(input, output, session) {
     } else {
       list(
         paging         = FALSE,
-        scrollY        = "500px",
+        scrollY        = "340px",
         scrollCollapse = TRUE,
         scrollX        = TRUE,
         dom            = "rti"
@@ -202,9 +202,6 @@ server <- function(input, output, session) {
 
   # Load wave data reactively (cached on disk by get_wave())
   vi_data    <- reactiveVal(NULL)
-  vi_url_var <- reactiveVal(NULL)  # variable to pre-select from bookmark restore, cleared on wave change
-
-  observeEvent(input$vi_wave, vi_url_var(NULL), ignoreInit = TRUE)
 
   observeEvent(input$vi_wave, {
     vi_data(NULL)
@@ -327,15 +324,10 @@ server <- function(input, output, session) {
   })
 
   output$vi_var_table <- renderDT({
-    tbl     <- vi_var_tbl()
-    pending <- isolate(vi_url_var())
-    sel     <- if (!is.null(pending)) {
-      idx <- which(tbl$variable_name == pending)
-      if (length(idx) > 0) idx[1] else NULL
-    } else NULL
+    tbl <- vi_var_tbl()
     datatable(
       tbl,
-      selection = list(mode = "single", selected = sel),
+      selection = list(mode = "single"),
       rownames  = FALSE,
       filter    = "top",
       style     = "bootstrap5",
@@ -1453,30 +1445,6 @@ server <- function(input, output, session) {
       write.csv(wave_cb, file, row.names = FALSE)
     }
   )
-
-  # ── Bookmarking ───────────────────────────────────────────────────────────
-  # Exclude action-button counters from bookmark state
-  setBookmarkExclude(c("mw_merge", "pd_load", "cb_reset"))
-
-  # When bookmarking: save the VI variable by name (row index is fragile)
-  onBookmark(function(state) {
-    vv <- vi_var()
-    if (!is.null(vv)) state$values$vi_var <- vv
-  })
-
-  # When restoring from a bookmark: pre-select the VI variable in the DT
-  onRestore(function(state) {
-    if (!is.null(state$values$vi_var))
-      vi_url_var(state$values$vi_var)
-  })
-
-  # After inputs are restored: switch to the bookmarked tab and auto-load panels
-  onRestored(function(state) {
-    tab <- state$input$main_navbar
-    if (!is.null(tab)) nav_select("main_navbar", selected = tab, session = session)
-    if (!is.null(state$input$pd_var) && nzchar(state$input$pd_var))
-      pd_trigger(pd_trigger() + 1L)
-  })
 
   # ── Tab 6: About ──────────────────────────────────────────────────────────
 

@@ -11,9 +11,7 @@ ui <- page_navbar(
     tags$style(HTML(
       ".selectize-input.has-items { max-height: none !important; overflow-y: visible !important; }
        #cb_detail { scroll-margin-top: 220px; }
-       .shiny-bookmark-btn { background: none !important; border: none !important;
-         padding: 0.4rem 0.6rem !important; color: inherit !important; opacity: 0.7; }
-       .shiny-bookmark-btn:hover { opacity: 1; }"
+       "
     )),
     tags$script(HTML("
       /* Clipboard copy with textarea fallback for non-HTTPS contexts */
@@ -284,11 +282,6 @@ ui <- page_navbar(
   ),
 
   nav_spacer(),
-  nav_item(bookmarkButton(
-    label = NULL,
-    icon  = icon("bookmark"),
-    title = "Bookmark / share current state"
-  )),
   nav_item(input_dark_mode(id = "dark_mode")),
   nav_item(
     a(icon("github"), href = "https://github.com/janfreihardt/BEMPdata",
