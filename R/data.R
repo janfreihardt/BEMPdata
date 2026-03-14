@@ -24,7 +24,7 @@
 #'   `block_randomization`, `question_display_logic`, `comment`, and
 #'   `dataset`.
 #'
-#' @source Zenodo record 18229498, `bemp_codebooks_as_csv.zip`
+#' @source Zenodo (concept DOI 10.5281/zenodo.18229497), `bemp_codebooks_as_csv.zip`
 "codebook"
 
 

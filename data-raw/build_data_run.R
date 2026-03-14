@@ -42,6 +42,8 @@ read_cb <- function(path) {
   wave_id <- tolower(wave_id)
   nms <- names(df)
   nms <- gsub(" ", "_", nms)
+  # Preserve negative single-digit value codes as val_negX before stripping sign
+  nms <- ifelse(grepl("^-[0-9]$", nms), paste0("val_neg", sub("^-", "", nms)), nms)
   nms <- gsub("[^A-Za-z0-9_]", "", nms)
   nms <- tolower(nms)
   nms <- ifelse(grepl("^[0-9]+$", nms), paste0("val_", nms), nms)
