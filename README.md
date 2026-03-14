@@ -75,7 +75,7 @@ bemp_cache_info()
 
 ## Data source
 
-Freihardt, J. et al. (2026). *The Bangladesh Environmental Mobility Panel (BEMP):
+Freihardt, J., Rudolph, L., Koubi, V. (2026). *The Bangladesh Environmental Mobility Panel (BEMP):
 Panel data on (im)mobility, socio-economic, and political impacts of riverbank
 erosion and flooding in Bangladesh* [Dataset]. Zenodo. <https://doi.org/10.5281/zenodo.18229497>
 
@@ -83,11 +83,11 @@ erosion and flooding in Bangladesh* [Dataset]. Zenodo. <https://doi.org/10.5281/
 
 If you use this package, please cite:
 
-> Freihardt, J. (2026). *BEMPdata: R package for the Bangladesh Environmental Mobility Panel*. Zenodo. <https://doi.org/10.5281/zenodo.18775709>
+> Freihardt, J. (2026). *BEMPdata: Access the Bangladesh Environmental Mobility Panel Dataset* (Version 0.2.1) [R package]. CRAN. <https://doi.org/10.5281/zenodo.18775709>
 
 For the underlying dataset:
 
-> Freihardt, J. et al. (2026). *The Bangladesh Environmental Mobility Panel (BEMP): Panel data on (im)mobility, socio-economic, and political impacts of riverbank erosion and flooding in Bangladesh* [Dataset]. Zenodo. <https://doi.org/10.5281/zenodo.18229497>
+> Freihardt, J., Rudolph, L., Koubi, V. (2026). *The Bangladesh Environmental Mobility Panel (BEMP): Panel data on (im)mobility, socio-economic, and political impacts of riverbank erosion and flooding in Bangladesh* [Dataset]. Zenodo. <https://doi.org/10.5281/zenodo.18229497>
 
 ## License
 
