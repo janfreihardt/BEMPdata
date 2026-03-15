@@ -19,8 +19,8 @@ Files are cached locally so subsequent calls are instant.
 
 ## Interactive data explorer
 
-An interactive app for browsing the codebook, inspecting variable distributions,
-and downloading data subsets is available at:
+An interactive app for browsing the codebook, inspecting variable distributions, panel dynamics, and correlations, as well as for
+downloading data subsets is available at:
 
 **<https://b68gkn-janfreihardt.shinyapps.io/bemp-explorer/>**
 
