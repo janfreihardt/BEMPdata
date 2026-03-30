@@ -21,7 +21,9 @@
 }
 
 .cache_dir <- function() {
-  d <- tools::R_user_dir("BEMPdata", which = "cache")
+  env_dir <- Sys.getenv("BEMPDATADIR", unset = NA)
+  d <- if (!is.na(env_dir) && nzchar(env_dir)) env_dir
+       else tools::R_user_dir("BEMPdata", which = "cache")
   if (!dir.exists(d)) dir.create(d, recursive = TRUE)
   d
 }

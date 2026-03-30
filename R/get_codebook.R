@@ -24,11 +24,17 @@ utils::globalVariables("codebook")
 #'
 #' @examples
 #' \donttest{
+#' # Use a temporary cache so downloaded files are cleaned up after the session
+#' old_cache <- Sys.getenv("BEMPDATADIR")
+#' Sys.setenv(BEMPDATADIR = file.path(tempdir(), "BEMPdata"))
+#'
 #' # Codebook for the baseline wave
 #' cb_w1 <- get_codebook("w1")
 #'
 #' # Merged codebook (all waves)
 #' cb_all <- get_codebook()
+#'
+#' Sys.setenv(BEMPDATADIR = old_cache)
 #' }
 get_codebook <- function(wave = "all", refresh = FALSE) {
   wave <- .normalise_wave(wave)

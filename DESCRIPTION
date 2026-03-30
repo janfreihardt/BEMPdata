@@ -1,6 +1,6 @@
 Package: BEMPdata
 Title: Access the Bangladesh Environmental Mobility Panel Dataset
-Version: 0.2.1
+Version: 0.2.2
 Authors@R:
     person("Jan", "Freihardt", role = c("aut", "cre"),
            email = "fjan@ethz.ch")

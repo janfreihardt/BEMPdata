@@ -27,7 +27,7 @@ Bangla value labels. Other columns include \code{item_source}, \code{item_text},
 \code{dataset}.
 }
 \source{
-Zenodo record 18229498, \code{bemp_codebooks_as_csv.zip}
+Zenodo (concept DOI 10.5281/zenodo.18229497), \code{bemp_codebooks_as_csv.zip}
 }
 \usage{
 codebook

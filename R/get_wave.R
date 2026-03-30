@@ -21,6 +21,10 @@
 #'
 #' @examples
 #' \donttest{
+#' # Use a temporary cache so downloaded files are cleaned up after the session
+#' old_cache <- Sys.getenv("BEMPDATADIR")
+#' Sys.setenv(BEMPDATADIR = file.path(tempdir(), "BEMPdata"))
+#'
 #' # Baseline in-person wave
 #' w1 <- get_wave("w1")
 #'
@@ -29,6 +33,8 @@
 #'
 #' # Village profile, Wave 14, in Stata format with value labels
 #' w14v <- get_wave("w14_V", format = "dta")
+#'
+#' Sys.setenv(BEMPDATADIR = old_cache)
 #' }
 get_wave <- function(wave, format = "csv", refresh = FALSE) {
   wave   <- .normalise_wave(wave)
