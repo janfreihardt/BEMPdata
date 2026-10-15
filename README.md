@@ -83,7 +83,7 @@ erosion and flooding in Bangladesh* [Dataset]. Zenodo. <https://doi.org/10.5281/
 
 If you use this package, please cite:
 
-> Freihardt, J. (2026). *BEMPdata: Access the Bangladesh Environmental Mobility Panel Dataset* (Version 0.2.1) [R package]. CRAN. <https://doi.org/10.5281/zenodo.18775709>
+> Freihardt, J. (2026). *BEMPdata: Access the Bangladesh Environmental Mobility Panel Dataset* (Version 0.2.3) [R package]. CRAN. <https://doi.org/10.5281/zenodo.18775709>
 
 For the underlying dataset:
 
