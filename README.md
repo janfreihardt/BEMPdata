@@ -5,7 +5,7 @@
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/BEMPdata)](https://CRAN.R-project.org/package=BEMPdata)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18775709.svg)](https://doi.org/10.5281/zenodo.18775709)
-[![Shiny app](https://img.shields.io/badge/Shiny-Data%20Explorer-blue?logo=r)](https://b68gkn-janfreihardt.shinyapps.io/bemp-explorer/)
+[![Shiny app](https://img.shields.io/badge/Shiny-Data%20Explorer-blue?logo=r)](https://janfreihardt-bemp-explorer.share.connect.posit.cloud/)
 <!-- badges: end -->
 
 `BEMPdata` provides functions to download and work with the
@@ -22,7 +22,7 @@ Files are cached locally so subsequent calls are instant.
 An interactive app for browsing the codebook, inspecting variable distributions, panel dynamics, and correlations, as well as for
 downloading data subsets is available at:
 
-**<https://b68gkn-janfreihardt.shinyapps.io/bemp-explorer/>**
+**<https://janfreihardt-bemp-explorer.share.connect.posit.cloud/>**
 
 Or launch it locally after installing the package:
 
